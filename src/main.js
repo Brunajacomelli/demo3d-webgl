@@ -14,7 +14,7 @@ let SCREEN_WIDTH = window.innerWidth;
 let SCREEN_HEIGHT = window.innerHeight;
 
 let container, stats;
-let camera, scene, renderer;
+let camera, scene, renderer, grid, truck;
 
 /*const characters = [];
 let nCharacters = 0;*/
@@ -32,14 +32,16 @@ const controls = {
 
 const clock = new THREE.Clock();
 
-	init();
-	animate();
-
 function init() {
 
     container = document.createElement( 'div' );
     document.body.appendChild( container );
 
+// SCENE
+
+scene = new THREE.Scene();
+scene.background = new THREE.Color( 0xffffff );
+scene.fog = new THREE.Fog( 0xffffff, 2000, 4000 );
 
 
     // OBJETO
@@ -62,27 +64,22 @@ object.traverse( function ( child ) {
 
     scene.add( object );
 
-    } );
+    truck = object;
 
-    //
+
+    } );
 
 manager.onLoad = function () {
 
-    render();
+   render();
 
-    };
-
+};
 
 // CAMERA
 
 camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 4000 );
-camera.position.set( 0, 150, 1300 );
+camera.position.set( 0, 150, 500 );
 
-// SCENE
-
-scene = new THREE.Scene();
-scene.background = new THREE.Color( 0xffffff );
-scene.fog = new THREE.Fog( 0xffffff, 2000, 4000 );
 
 scene.add( camera );
 
@@ -95,7 +92,7 @@ light.position.set( 200, 450, 500 ); //define a posição da luz direcional, com
 
 light.castShadow = true; //permite a projeção de sombras
 
-light.shadow.mapSize.width = 1024; 
+light.shadow.mapSize.width = 1024;
 light.shadow.mapSize.height = 512;
 
 light.shadow.camera.near = 100;
@@ -131,6 +128,7 @@ scene.add( ground );
 renderer = new THREE.WebGLRenderer( { antialias: true } );
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
+
 container.appendChild( renderer.domElement );
 
 renderer.shadowMap.enabled = true;
@@ -158,10 +156,12 @@ cameraControls.maxPolarAngle = Math.PI/2; // radians
 
 //GRID
 const groundSize = 16000
-const numDivisions = 50; 
-const grid = new THREE.GridHelper( groundSize, numDivisions, 0x000000, 0x000000 );
+const numDivisions = 50;
+grid = new THREE.GridHelper( groundSize, numDivisions, 0x000000, 0x000000 );
 grid.position.set(1, 1, 1);
 scene.add( grid );
+
+
 
 
 }
@@ -230,27 +230,22 @@ switch ( event.code ) {
 
 }
 
-//
-
 function animate() {
 
-requestAnimationFrame( animate );
-render();
+    requestAnimationFrame( animate );
+    render();
 
-stats.update();
+    stats.update();
+    truck.position.z += 0.5;
+    camera.position.z += 0.5;
 
-}
+    }
 
 function render() {
 
-/*const delta = clock.getDelta();
-
-for ( let i = 0; i < nCharacters; i ++ ) {
-
-    characters[ i ].update( delta );
-
-}*/
-
-renderer.render( scene, camera );
+    renderer.render( scene, camera );
 
 }
+
+init();
+animate();
