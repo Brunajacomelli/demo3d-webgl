@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { ThreeMFLoader } from 'three/addons/loaders/3MFLoader.js';
 //import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import Stats from 'three/addons/libs/stats.module.js';
 //import { MD2CharacterComplex } from 'three/addons/misc/MD2CharacterComplex.js';
@@ -40,6 +41,36 @@ function init() {
     document.body.appendChild( container );
 
 
+
+    // OBJETO
+const manager = new THREE.LoadingManager();
+
+const loader = new ThreeMFLoader( manager );
+loader.load( './models/3mf/truck.3mf', function ( object ) {
+
+object.rotation.set( - Math.PI / 2, 0, 0 ); // z-up conversion
+
+object.scale.set(5, 5, 5);
+
+object.position.y = 0;
+
+object.traverse( function ( child ) {
+
+    child.castShadow = false;
+
+        } );
+
+    scene.add( object );
+
+    } );
+
+    //
+
+manager.onLoad = function () {
+
+    render();
+
+    };
 
 
 // CAMERA
@@ -119,101 +150,20 @@ document.addEventListener( 'keyup', onKeyUp );
 // CONTROLS
 
 cameraControls = new OrbitControls( camera, renderer.domElement );
-cameraControls.target.set( 0, 50, 0 );
+cameraControls.target.set( 0, 100, 0 );
 cameraControls.update();
+cameraControls.minPolarAngle = 0; // radians
+cameraControls.maxPolarAngle = Math.PI/2; // radians
+
 
 //GRID
 const groundSize = 16000
-const numDivisions = 100; 
-const grid = new THREE.GridHelper( groundSize, numDivisions, 0x1a1a1a, 0x1a1a1a );
-
-grid.position.set(1, 1, 1)
+const numDivisions = 50; 
+const grid = new THREE.GridHelper( groundSize, numDivisions, 0x000000, 0x000000 );
+grid.position.set(1, 1, 1);
 scene.add( grid );
 
 
-// CHARACTER
-
-/*const configOgro = {
-
-    baseUrl: 'models/md2/ogro/',
-
-    body: 'ogro.md2',
-    skins: [ 'grok.jpg', 'ogrobase.png', 'arboshak.png', 'ctf_r.png', 'ctf_b.png', 'darkam.png', 'freedom.png',
-             'gib.png', 'gordogh.png', 'igdosh.png', 'khorne.png', 'nabogro.png',
-             'sharokh.png' ],
-    weapons: [[ 'weapon.md2', 'weapon.jpg' ]],
-    animations: {
-        move: 'run',
-        idle: 'stand',
-        jump: 'jump',
-        attack: 'attack',
-        crouchMove: 'cwalk',
-        crouchIdle: 'cstand',
-        crouchAttach: 'crattack'
-    },
-
-    walkSpeed: 350,
-    crouchSpeed: 175
-
-};
-
-const nRows = 1;
-const nSkins = configOgro.skins.length;
-
-nCharacters = nSkins * nRows;
-
-for ( let i = 0; i < nCharacters; i ++ ) {
-
-    const character = new MD2CharacterComplex();
-    character.scale = 3;
-    character.controls = controls;
-    characters.push( character );
-
-}
-
-const baseCharacter = new MD2CharacterComplex();
-baseCharacter.scale = 3;
-
-baseCharacter.onLoadComplete = function () {
-
-    let k = 0;
-
-    for ( let j = 0; j < nRows; j ++ ) {
-
-        for ( let i = 0; i < nSkins; i ++ ) {
-
-            const cloneCharacter = characters[ k ];
-
-            cloneCharacter.shareParts( baseCharacter );
-
-            // cast and receive shadows
-            cloneCharacter.enableShadows( true );
-
-            cloneCharacter.setWeapon( 0 );
-            cloneCharacter.setSkin( i );
-
-            cloneCharacter.root.position.x = ( i - nSkins / 2 ) * 150;
-            cloneCharacter.root.position.z = j * 250;
-
-            scene.add( cloneCharacter.root );
-
-            k ++;
-
-        }
-
-    }
-
-    const gyro = new Gyroscope();
-    gyro.add( camera );
-    gyro.add( light, light.target );
-
-    characters[ Math.floor( nSkins / 2 ) ].root.add( gyro );
-
-};
-
-baseCharacter.loadParts( configOgro );
-
-} */
 }
 
 // EVENT HANDLERS
