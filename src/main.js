@@ -3,8 +3,8 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 //import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import Stats from 'three/addons/libs/stats.module.js';
-import { MD2CharacterComplex } from 'three/addons/misc/MD2CharacterComplex.js';
-import { Gyroscope } from 'three/addons/misc/Gyroscope.js';
+//import { MD2CharacterComplex } from 'three/addons/misc/MD2CharacterComplex.js';
+//import { Gyroscope } from 'three/addons/misc/Gyroscope.js';
 
 //const controls = new OrbitControls( camera, renderer.domElement );
 //const loader = new GLTFLoader();
@@ -15,8 +15,8 @@ let SCREEN_HEIGHT = window.innerHeight;
 let container, stats;
 let camera, scene, renderer;
 
-const characters = [];
-let nCharacters = 0;
+/*const characters = [];
+let nCharacters = 0;*/
 
 let cameraControls;
 
@@ -39,6 +39,9 @@ function init() {
     container = document.createElement( 'div' );
     document.body.appendChild( container );
 
+
+
+
 // CAMERA
 
 camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 4000 );
@@ -48,7 +51,7 @@ camera.position.set( 0, 150, 1300 );
 
 scene = new THREE.Scene();
 scene.background = new THREE.Color( 0xffffff );
-scene.fog = new THREE.Fog( 0xffffff, 1000, 4000 );
+scene.fog = new THREE.Fog( 0xffffff, 2000, 4000 );
 
 scene.add( camera );
 
@@ -119,10 +122,18 @@ cameraControls = new OrbitControls( camera, renderer.domElement );
 cameraControls.target.set( 0, 50, 0 );
 cameraControls.update();
 
+//GRID
+const groundSize = 16000
+const numDivisions = 100; 
+const grid = new THREE.GridHelper( groundSize, numDivisions, 0x1a1a1a, 0x1a1a1a );
+
+grid.position.set(1, 1, 1)
+scene.add( grid );
+
 
 // CHARACTER
 
-const configOgro = {
+/*const configOgro = {
 
     baseUrl: 'models/md2/ogro/',
 
@@ -202,6 +213,7 @@ baseCharacter.onLoadComplete = function () {
 
 baseCharacter.loadParts( configOgro );
 
+} */
 }
 
 // EVENT HANDLERS
@@ -281,14 +293,14 @@ stats.update();
 
 function render() {
 
-const delta = clock.getDelta();
+/*const delta = clock.getDelta();
 
 for ( let i = 0; i < nCharacters; i ++ ) {
 
     characters[ i ].update( delta );
 
-}
+}*/
 
 renderer.render( scene, camera );
 
-}  
+}
