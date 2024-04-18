@@ -123,6 +123,15 @@ ground.receiveShadow = true;
 
 scene.add( ground );
 
+//GRID
+const groundSize = 16000
+const numDivisions = 50; 
+grid = new THREE.GridHelper( groundSize, numDivisions, 0x000000, 0x000000 );
+//grid.position.set(1, 1, 1);
+grid.material.depthWrite = false;
+grid.material.transparent = true;
+scene.add( grid );
+
 // RENDERER
 
 renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -152,17 +161,6 @@ cameraControls.target.set( 0, 100, 0 );
 cameraControls.update();
 cameraControls.minPolarAngle = 0; // radians
 cameraControls.maxPolarAngle = Math.PI/2; // radians
-
-
-//GRID
-const groundSize = 16000
-const numDivisions = 50;
-grid = new THREE.GridHelper( groundSize, numDivisions, 0x000000, 0x000000 );
-grid.position.set(1, 1, 1);
-scene.add( grid );
-
-
-
 
 }
 
