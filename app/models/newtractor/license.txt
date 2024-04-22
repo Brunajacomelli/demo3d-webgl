@@ -1,0 +1,11 @@
+Model Information:
+* title:	tractor
+* source:	https://sketchfab.com/3d-models/tractor-2614ec07916d4b2da2d096f78420c905
+* author:	ahmadbaroud (https://sketchfab.com/ahmadbaroud60)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "tractor" (https://sketchfab.com/3d-models/tractor-2614ec07916d4b2da2d096f78420c905) by ahmadbaroud (https://sketchfab.com/ahmadbaroud60) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
