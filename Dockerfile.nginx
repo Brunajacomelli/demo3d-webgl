@@ -1,0 +1,8 @@
+ARG IMAGE_ARCH=linux/arm64
+
+FROM --platform=$IMAGE_ARCH nginx:stable
+FROM nginx:stable-alpine
+
+COPY app /usr/share/nginx/html
+
+CMD ["nginx", "-g", "daemon off;"]
