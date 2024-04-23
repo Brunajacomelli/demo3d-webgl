@@ -7,7 +7,7 @@ export default {
 		{
 			format: 'umd',
 			name: 'MYAPP',
-			file: 'build/bundle.js'
+			file: 'app/bundle.js'
 		}
 	],
 	plugins: [ resolve(), terser() ]
