@@ -115,8 +115,6 @@ cameraControls.enableZoom = true;
 cameraControls.minDistance = 0;
 cameraControls.maxDistance = 1000;
 
-
-
 render();
     } );
 
