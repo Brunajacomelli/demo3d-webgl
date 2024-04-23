@@ -1,0 +1,1 @@
+dtc -@ -Hepapr -I dts -O dtb -i /home/ferlzc/Documents/Demo/linux-toradex/arch/arm64/boot/dts  -o verdin-imx8mm_volcano_panel-cap-touch-7-10inch-dsi_overlay.dtbo verdin-imx8mm_volcano_panel-cap-touch-7-10inch-dsi_overlay.dts 

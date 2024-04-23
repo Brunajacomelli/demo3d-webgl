@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  weston:
+    image: torizon/weston-vivante:3.3.0
+    environment:
+      - ACCEPT_FSL_EULA=1
+    privileged: true
+    network_mode: "host"
+    cap_add:
+      - CAP_SYS_TTY_CONFIG
+    volumes:
+      - /dev:/dev
+      - /tmp:/tmp
+      - /run/udev/:/run/udev/
+    devices:
+      - "/dev/tty7:/dev/tty7"
+    tmpfs:
+      - /run
+    restart: unless-stopped
+
+  chromium:
+    image: torizon/chromium:$CT_TAG_CHROMIUM
+    volumes:
+      - /tmp:/tmp
+      - /var/run/dbus:/var/run/dbus
+      - /dev/galcore:/dev/galcore
+    devices:
+      - "/dev/galcore:/dev/galcore"
+    device_cgroup_rules:
+      - "c 199:* rmw"
+    security_opt:
+      - seccomp=unconfined
+    shm_size: 1024mb
+    command: "http://agro-demo"
+    networks:
+      - agro-net
+    restart: unless-stopped
+
+  agro-demo:
+    image: ferlzc/agro-demo
+    networks:
+      - agro-net
+    restart: unless-stopped
+
+networks:
+  agro-net:

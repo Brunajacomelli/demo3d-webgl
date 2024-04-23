@@ -1,0 +1,37 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+/*
+ * Copyright 2023 Toradex
+ */
+
+// TS070WSH02CE-B0015A DSI display (7 inch) with a resolution of 1024x600 pixel.
+
+&panel_lvds {
+	compatible = "panel-lvds";
+	backlight = <&backlight>;
+	data-mapping = "vesa-24";
+	height-mm = <85>;
+	width-mm = <154>;
+	status = "okay";
+
+	panel-timing {
+		clock-frequency = <47250000>;
+		de-active = <1>;
+		hactive = <1024>;
+		hback-porch = <64>;
+		hfront-porch = <72>;
+		hsync-active = <0>;
+		hsync-len = <32>;
+		pixelclk-active = <1>;
+		vactive = <600>;
+		vback-porch = <15>;
+		vfront-porch = <15>;
+		vsync-active = <0>;
+		vsync-len = <8>;
+	};
+
+	port {
+		panel_in_lvds_riv: endpoint {
+			remote-endpoint = <&lvds_out_panel_riv>;
+		};
+	};
+};
