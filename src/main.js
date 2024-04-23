@@ -1,9 +1,7 @@
 import * as THREE from 'three';
 
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-//import { ThreeMFLoader } from 'three/addons/loaders/3MFLoader.js';
 import Stats from 'three/addons/libs/stats.module.js';
-//import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 let SCREEN_WIDTH = window.innerWidth;
@@ -16,10 +14,11 @@ let grid;
 let tractor;
 let tractorSpeed=0.5;
 
+
+
 const clock = new THREE.Clock();
 
 // atenção na possibilidade de async function
-
 function init() {
     container = document.createElement( 'div' );
     document.body.appendChild( container );
@@ -27,7 +26,8 @@ function init() {
 //CENA
 scene = new THREE.Scene();
 scene.background = new THREE.Color( 0xB8E1FC );
-scene.fog = new THREE.FogExp2( 0xd8d9da, 0.00035 );
+//scene.fog = new THREE.FogExp2( 0xd8d9da, 0.00035 );
+scene.fog = new THREE.Fog( 0xffffff, 2000, 4000 )
 
 //CAMERA
 camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 4000 );
@@ -67,7 +67,6 @@ scene.add( light );
 const gt = new THREE.TextureLoader().load( 'textures/terrain/grasslight-big.jpg' );
 const gg = new THREE.PlaneGeometry( 16000, 16000 );
 const gm = new THREE.MeshPhongMaterial( { color: 0xffffff, depthWrite: false, map: gt } );
-
 const ground = new THREE.Mesh( gg, gm );
 ground.rotation.x = - Math.PI / 2;
 ground.material.map.repeat.set( 8, 8 );
@@ -93,7 +92,7 @@ const loader = new GLTFLoader().setPath( 'models/newtractor/' );
     tractor = gltf.scene;
 
     // Modifique a escala do objeto aqui
-    tractor.scale.set(25, 25, 25);
+    tractor.scale.set(35, 35, 35);
 
     tractor.position.y = 0;
 
@@ -111,6 +110,11 @@ cameraControls.target.copy(tractor.position);
 cameraControls.update();
 cameraControls.minPolarAngle = 1; // radians
 cameraControls.maxPolarAngle = Math.PI/3; // radians
+
+cameraControls.enableZoom = true;
+cameraControls.minDistance = 0;
+cameraControls.maxDistance = 1000;
+
 
 
 render();
