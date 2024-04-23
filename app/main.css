@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Remover barra de rolagem horizontal */
+    overflow-y: hidden; /* Remover barra de rolagem vertical */
+  }
+
+  .row {
+    display: flex;
+    /* Definir a altura da linha */
+    /* height: 100px; */
+  }
+
+  .column {
+    flex: 1;
+    border: 1px solid black;
+    text-align: center;
+    padding: 10px;
+    /* Definir a largura das colunas */
+    /* width: 100px; */
+  }
+
+  /* Ajustar a descrição e o valor */
+  .description {
+    font-size: 14px;
+  }
+
+  .value {
+    font-size: 18px;
+    display: block;
+  }
+
+  .bottom-row {
+    display: flex;
+    justify-content: space-between; /* Distribuir as colunas uniformemente */
+    align-items: flex-end; /* Alinhar a linha na parte inferior da página */
+    background-color: #f0f0f0; /* Cor de fundo da linha */
+    padding: 10px;
+  }
+
+  .bottom-column {
+    flex: 1;
+    position: relative;
+  }
+
+  .vertical-bar {
+    position: absolute;
+    width: 2px; /* Largura da barra vertical */
+    height: 100%; /* Altura da barra vertical */
+    background-color: yellow; /* Cor da barra vertical */
+    top: 0;
+    right: 0;
+  }
