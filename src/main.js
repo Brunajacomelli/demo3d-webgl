@@ -5,8 +5,6 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import Stats from 'three/addons/libs/stats.module.js';
 //import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
-
 
 let SCREEN_WIDTH = window.innerWidth;
 let SCREEN_HEIGHT = window.innerHeight;
@@ -14,7 +12,6 @@ let SCREEN_HEIGHT = window.innerHeight;
 let container, stats;
 let camera, scene, renderer;
 let cameraControls
-let loader;
 let grid;
 let tractor;
 let tractorSpeed=0.5;
@@ -68,7 +65,7 @@ scene.add( light );
 
 //GROUND
 const gt = new THREE.TextureLoader().load( 'textures/terrain/grasslight-big.jpg' );
-const gg = new THREE.PlaneGeometry( 1000, 1000 );
+const gg = new THREE.PlaneGeometry( 16000, 16000 );
 const gm = new THREE.MeshPhongMaterial( { color: 0xffffff, depthWrite: false, map: gt } );
 
 const ground = new THREE.Mesh( gg, gm );
@@ -91,8 +88,8 @@ grid.material.transparent = true;
 scene.add( grid );
 
 //OBJETO
-loader = new GLTFLoader().setPath( 'models/newtractor/' );
-loader.load( 'tractor.gltf', async function ( gltf) {
+const loader = new GLTFLoader().setPath( 'models/newtractor/' );
+	loader.load( 'tractor.gltf', async function ( gltf ) {
     tractor = gltf.scene;
 
     // Modifique a escala do objeto aqui
