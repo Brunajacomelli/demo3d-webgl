@@ -11,15 +11,13 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
 let SCREEN_WIDTH = window.innerWidth;
 let SCREEN_HEIGHT = window.innerHeight;
 
-let container, stats; 
+let container, stats;
 let camera, scene, renderer;
 let cameraControls
 let loader;
 let grid;
 let tractor;
-let tractorSpeed=0.1;
-
-const groundSize = 1000 //informação da GRID
+let tractorSpeed=0.5;
 
 const clock = new THREE.Clock();
 
@@ -35,9 +33,17 @@ scene.background = new THREE.Color( 0xB8E1FC );
 scene.fog = new THREE.FogExp2( 0xd8d9da, 0.00035 );
 
 //CAMERA
-camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 400 );
-camera.position.set( 0, 50, 100 );
+camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 4000 );
+camera.position.set( 100, 500, -500 );
 scene.add( camera );
+
+/*
+// DESENHA COORDENADAS X,Y,Z
+let axesHelper = new THREE.AxesHelper( 2000 );
+axesHelper.setColors (  "red", "yellow", "blue"  )
+
+scene.add( axesHelper );
+*/
 
 //LUZES
 scene.add( new THREE.AmbientLight( 0x666666, 3 ) ); //adciona luz ambiente - cor e intensidade
@@ -67,7 +73,7 @@ const gm = new THREE.MeshPhongMaterial( { color: 0xffffff, depthWrite: false, ma
 
 const ground = new THREE.Mesh( gg, gm );
 ground.rotation.x = - Math.PI / 2;
-ground.material.map.repeat.set( 64, 64 );
+ground.material.map.repeat.set( 8, 8 );
 ground.material.map.wrapS = THREE.RepeatWrapping;
 ground.material.map.wrapT = THREE.RepeatWrapping;
 ground.material.map.colorSpace = THREE.SRGBColorSpace;
@@ -76,8 +82,9 @@ scene.add( ground );
 
 //GRID
 
-const numDivisions = 30; 
-grid = new THREE.GridHelper( groundSize, numDivisions, 0x000000, 0x000000 );
+const groundSize = 16000
+const numDivisions = 200;
+grid = new THREE.GridHelper( 2*groundSize, numDivisions, 0x000000, 0x000000 );
 grid.position.set(1, 1, 1);
 grid.material.depthWrite = false;
 grid.material.transparent = true;
@@ -89,7 +96,7 @@ loader.load( 'tractor.gltf', async function ( gltf) {
     tractor = gltf.scene;
 
     // Modifique a escala do objeto aqui
-    tractor.scale.set(1, 1, 1);        
+    tractor.scale.set(25, 25, 25);
 
     tractor.position.y = 0;
 
@@ -97,6 +104,17 @@ loader.load( 'tractor.gltf', async function ( gltf) {
 	await renderer.compileAsync( tractor, camera, scene );
 
 scene.add( tractor );
+
+
+//CONTROLES DA CÂMERA
+cameraControls = new OrbitControls( camera, renderer.domElement );
+cameraControls.autoRotate = true;
+cameraControls.autoRotateSpeed = 0.5;
+cameraControls.target.copy(tractor.position);
+cameraControls.update();
+cameraControls.minPolarAngle = 1; // radians
+cameraControls.maxPolarAngle = Math.PI/3; // radians
+
 
 render();
     } );
@@ -112,19 +130,13 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild( renderer.domElement );
 
 
-//CONTROLES DA CÂMERA
-cameraControls = new OrbitControls( camera, renderer.domElement );
-cameraControls.target.set( 0, 10, 0 );
-cameraControls.update();
-cameraControls.minPolarAngle = 0; // radians
-cameraControls.maxPolarAngle = Math.PI/2; // radians
-cameraControls.enableZoom = false;
+
 
 // STATS
 stats = new Stats();
 container.appendChild( stats.dom );
 
-//EVENTS 
+//EVENTS
 //window.addEventListener( 'resize', onWindowResize );
 //events handlers
 //SCREEN_WIDTH = window.innerWidth;
@@ -137,20 +149,7 @@ camera.updateProjectionMatrix();
 
 }
 
-function moveTractor() {
-    const newZ = tractor.position.z + tractorSpeed;
-    
-  // Verifica se a nova posição está dentro dos limites da grade
-  if (newZ < groundSize) {
-    tractor.position.z = newZ; // Atualiza a posição do trator para a nova posição
-    camera.position.z = newZ; // Atualiza a posição da câmera para seguir o trator
-} else {
-    tractor.position.set(0,0,0); // Atualiza a posição do trator para a nova posição
-    camera.position.set(0,0,0); 
-}
-cameraControls.update();
-
-}
+var distanciaPercorrida = 1;
 
 function animate() {
 
@@ -158,10 +157,29 @@ function animate() {
     render();
     stats.update();
 
-    moveTractor()
+//    moveTractor()
+
+ // Verifique se o objeto já percorreu 101 unidades
+ if (distanciaPercorrida >= 6000) {
+    // Altere a direção
+    // Reinicie a contagem da distância percorrida
+    distanciaPercorrida = 1;
+    tractor.position.set(1,0,0);
+    camera.position.set( 101, 500, -500 );
+
+}
+
+    tractor.position.z += tractorSpeed;
+    camera.position.z += tractorSpeed;
+
+    // Atualize a distância percorrida
+    distanciaPercorrida += Math.abs(tractorSpeed);
+
+    cameraControls.target.copy(tractor.position);
+
+    cameraControls.update();
 
     }
-
 
 function render() {
 

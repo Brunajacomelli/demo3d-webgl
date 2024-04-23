@@ -1,36 +1,54 @@
 <html lang="en">
-
-<head>
-	<title>My three.js app</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<style src="../lib/bootstrap-5/css/bootstrap.css" ></style>
-	<style src="../lib/bootstrap-5/css/bootstrap.rtl.css" ></style>
-	<style src="../lib/bootstrap-5/css/bootstrap.min.css" ></style>
-	<style src="../lib/bootstrap-5/css/bootstrap.rtl.min.css" ></style>
-
-	<style>
-		/* Optional custom styles */
-		.custom-col {
-		  border: 1px solid #ddd;
-		  padding: 20px;
-		}
-	  </style>
-
-	<script src="../build/bundle.js" defer></script>
-	<script src="../libs/bootstrap-5/js/bootstrap.bundle.js"></script>
-	<script src="../libs/bootstrap-5/js/bootstrap.bundle.js"></script>
+	<head>
+		<title>My three.js app</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				margin: 0;
+			}
+		</style>
+		<script src="../build/bundle.js" defer></script>
+	</head>
 
 <body>
-
-	<div class="container-fluid">
-		<div class="row">
-		  <div class="col-sm custom-col">
-			STATUS
-		  </div>
+	<div class="row">
+		<div class="column">
+		  <span class="description">Velocidade(Km/h)</span>
+		  <span class="value">100</span>
 		</div>
-	 </div>
+		<div class="column">
+		  <span class="description">Pressão de corte</span>
+		  <span class="value">200</span>
+		</div>
+		<div class="column">
+		  <span class="description">Fertilizante</span>
+		  <span class="value">300</span>
+		</div>
+	  </div>
 
+
+	  <div class="bottom-row">
+		<div class="bottom-column">
+		  <div class="vertical-bar"></div>
+		</div>
+		<div class="bottom-column">
+		  <div class="vertical-bar"></div>
+		</div>
+		<div class="bottom-column">
+		  <div class="vertical-bar"></div>
+		</div>
+		<div class="bottom-column">
+		  <div class="vertical-bar"></div>
+		</div>
+		<div class="bottom-column">
+		  <div class="vertical-bar"></div>
+		</div>
+		<div class="bottom-column">
+		  <div class="vertical-bar"></div>
+		</div>
+	  </div>
 </body>
 
 </html>
