@@ -5,6 +5,8 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import Stats from 'three/addons/libs/stats.module.js';
 //import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
+
 
 let SCREEN_WIDTH = window.innerWidth;
 let SCREEN_HEIGHT = window.innerHeight;
@@ -12,9 +14,12 @@ let SCREEN_HEIGHT = window.innerHeight;
 let container, stats; 
 let camera, scene, renderer;
 let cameraControls
+let loader;
 let grid;
 let tractor;
-let tractorSpeed=5;
+let tractorSpeed=0.1;
+
+const groundSize = 1000 //informação da GRID
 
 const clock = new THREE.Clock();
 
@@ -30,8 +35,8 @@ scene.background = new THREE.Color( 0xB8E1FC );
 scene.fog = new THREE.FogExp2( 0xd8d9da, 0.00035 );
 
 //CAMERA
-camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 4000 );
-camera.position.set( 0, 150, 500 );
+camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 400 );
+camera.position.set( 0, 50, 100 );
 scene.add( camera );
 
 //LUZES
@@ -57,7 +62,7 @@ scene.add( light );
 
 //GROUND
 const gt = new THREE.TextureLoader().load( 'textures/terrain/grasslight-big.jpg' );
-const gg = new THREE.PlaneGeometry( 16000, 16000 );
+const gg = new THREE.PlaneGeometry( 1000, 1000 );
 const gm = new THREE.MeshPhongMaterial( { color: 0xffffff, depthWrite: false, map: gt } );
 
 const ground = new THREE.Mesh( gg, gm );
@@ -70,8 +75,8 @@ ground.receiveShadow = true;
 scene.add( ground );
 
 //GRID
-const groundSize = 16000
-const numDivisions = 50; 
+
+const numDivisions = 30; 
 grid = new THREE.GridHelper( groundSize, numDivisions, 0x000000, 0x000000 );
 grid.position.set(1, 1, 1);
 grid.material.depthWrite = false;
@@ -79,12 +84,12 @@ grid.material.transparent = true;
 scene.add( grid );
 
 //OBJETO
-const loader = new GLTFLoader().setPath( 'models/newtractor/' );
-	loader.load( 'tractor.gltf', async function ( gltf ) {
+loader = new GLTFLoader().setPath( 'models/newtractor/' );
+loader.load( 'tractor.gltf', async function ( gltf) {
     tractor = gltf.scene;
 
     // Modifique a escala do objeto aqui
-    tractor.scale.set(50, 50, 50);        
+    tractor.scale.set(1, 1, 1);        
 
     tractor.position.y = 0;
 
@@ -109,11 +114,11 @@ document.body.appendChild( renderer.domElement );
 
 //CONTROLES DA CÂMERA
 cameraControls = new OrbitControls( camera, renderer.domElement );
-cameraControls.target.set( 0, 100, 0 );
+cameraControls.target.set( 0, 10, 0 );
 cameraControls.update();
 cameraControls.minPolarAngle = 0; // radians
 cameraControls.maxPolarAngle = Math.PI/2; // radians
-
+cameraControls.enableZoom = false;
 
 // STATS
 stats = new Stats();
@@ -133,13 +138,18 @@ camera.updateProjectionMatrix();
 }
 
 function moveTractor() {
-    const newX = tractor.position.x + tractorSpeed;
+    const newZ = tractor.position.z + tractorSpeed;
     
   // Verifica se a nova posição está dentro dos limites da grade
-  if (newX < groundSize / 2) {
-    tractor.position.x = newX; // Atualiza a posição do trator para a nova posição
-    camera.position.x = newX; // Atualiza a posição da câmera para seguir o trator
+  if (newZ < groundSize) {
+    tractor.position.z = newZ; // Atualiza a posição do trator para a nova posição
+    camera.position.z = newZ; // Atualiza a posição da câmera para seguir o trator
+} else {
+    tractor.position.set(0,0,0); // Atualiza a posição do trator para a nova posição
+    camera.position.set(0,0,0); 
 }
+cameraControls.update();
+
 }
 
 function animate() {
@@ -149,9 +159,6 @@ function animate() {
     stats.update();
 
     moveTractor()
-
-    tractor.position.z += 0.5;
-    camera.position.z += 0.5;
 
     }
 
