@@ -1,6 +1,0 @@
-# Use the torizon/cog:3 base image
-FROM torizon/cog:3
-
-# Change the CMD instruction
-CMD ["http://0.0.0.0:8080"]
-

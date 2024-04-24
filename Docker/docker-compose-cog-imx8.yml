@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  weston:
+    image: torizon/weston-imx8:4.0-rc
+    environment:
+      - ACCEPT_FSL_EULA=1
+    network_mode: host
+    cap_add:
+      - CAP_SYS_TTY_CONFIG
+    volumes:
+      - /dev:/dev
+      - /tmp:/tmp
+      - /run/udev/:/run/udev/
+    device_cgroup_rules:
+      - 'c 4:* rmw'
+      - 'c 13:* rmw'
+      - 'c 199:* rmw'
+      - 'c 226:* rmw'
+    restart: unless-stopped
+
+  cog:
+    image: torizon/cog-imx8:4-rc
+    volumes:
+      - /tmp:/tmp
+      - /var/run/dbus:/var/run/dbus
+      - /dev/galcore:/dev/galcore
+    device_cgroup_rules:
+      - 'c 199:* rmw'
+    networks:
+      - agro-net
+    restart: unless-stopped
+    command: [ "http://agro-demo" ]
+
+  agro-demo:
+    image: ferlzc/agro-demo
+    networks:
+      - agro-net
+    restart: unless-stopped
+
+networks:
+  agro-net:
