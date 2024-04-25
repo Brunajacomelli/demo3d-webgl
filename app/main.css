@@ -2,6 +2,7 @@ body {
     font-family: "Archive Regular", sans-serif;
     margin: 0;
     padding: 0;
+    user-select: none;
     overflow-x: hidden; /* Remover barra de rolagem horizontal */
     overflow-y: hidden; /* Remover barra de rolagem vertical */
   }
@@ -14,16 +15,16 @@ body {
 
   .container .btn {
   position: fixed;
-  top: 50%;
+  top: 70%;
   right: 1%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   background-color: #00508C;
   color: #f1f1f1;
-  font-size: 12px;
+  font-size: 11px;
   /*padding: 20px 30px; */
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   border: none;
   border-radius: 5px;
   text-align: center;
@@ -34,7 +35,7 @@ body {
 }
 
 .container .btn .number {
-  font-size: 50px; 
+  font-size: 40px; 
   text-align: center;
   color:#FFDE59;
   margin-top: 8px;
@@ -43,16 +44,16 @@ body {
 
 .container .btn2 {
   position: fixed;
-  top: 30%;
+  top: 40%;
   right: 1%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   background-color: #00508C;
   color: #f1f1f1;
-  font-size: 12px;
+  font-size: 11px;
   /*padding: 20px 30px; */
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   border: none;
   border-radius: 5px;
   text-align: center;
@@ -63,7 +64,7 @@ body {
 }
 
 .container .btn2 .number {
-  font-size: 50px; 
+  font-size: 40px; 
   text-align: center;
   color:#FFDE59;
   margin-top: 8px;
@@ -78,10 +79,10 @@ body {
   -ms-transform: translate(-50%, -50%);
   background-color: #00508C;
   color: #f1f1f1;
-  font-size: 12px;
+  font-size: 11px;
   /*padding: 20px 30px; */
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   border: none;
   cursor: pointer;
   border-radius: 5px;
@@ -93,7 +94,7 @@ body {
 }
 
 .container .btn3 .number {
-  font-size: 60px; 
+  font-size: 50px; 
   text-align: center;
   color:#FFDE59;
   margin-top: 8px;

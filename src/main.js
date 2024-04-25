@@ -14,8 +14,6 @@ let grid;
 let tractor;
 let tractorSpeed=0.5;
 
-
-
 const clock = new THREE.Clock();
 
 // atenção na possibilidade de async function
@@ -92,7 +90,7 @@ const loader = new GLTFLoader().setPath( 'models/newtractor/' );
     tractor = gltf.scene;
 
     // Modifique a escala do objeto aqui
-    tractor.scale.set(35, 35, 35);
+    tractor.scale.set(65, 65, 65);
 
     tractor.position.y = 0;
 
@@ -150,6 +148,25 @@ camera.updateProjectionMatrix();
 
 var distanciaPercorrida = 1;
 
+/*var incremento = 0.2;
+var limiteSuperior = 3;
+var limiteInferior = 0.5;
+var subindo = true;
+
+function incrementarVelocidade() {
+    if (subindo) {
+        tractorSpeed += incremento;
+         if (tractorSpeed >= limiteSuperior) {
+            subindo = false}
+      } else { tractorSpeed -= incremento;
+      if (tractorSpeed<=limiteInferior) {
+        subindo = true; 
+      }
+    }
+      document.getElementById("velocidade").innerText = tractorSpeed.toFixed(1);
+    } */
+
+
 function animate() {
 
     requestAnimationFrame( animate );
@@ -159,7 +176,7 @@ function animate() {
 //    moveTractor()
 
  // Verifique se o objeto já percorreu 101 unidades
- if (distanciaPercorrida >= 6000) {
+ if (distanciaPercorrida >= 5000) {
     // Altere a direção
     // Reinicie a contagem da distância percorrida
     distanciaPercorrida = 1;
