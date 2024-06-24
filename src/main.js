@@ -165,7 +165,7 @@ function incrementarVelocidade() {
     }
       document.getElementById("velocidade").innerText = tractorSpeed.toFixed(1);
     } */
-
+ 
 
 function animate() {
 
@@ -184,7 +184,6 @@ function animate() {
     camera.position.set( 101, 500, -500 );
 
 }
-
     tractor.position.z += tractorSpeed;
     camera.position.z += tractorSpeed;
 

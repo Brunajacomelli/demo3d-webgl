@@ -15,17 +15,9 @@
 <body>
 
 <div class="container">
-	<button class="btn">
-		<span class="title">fertilizante</span>
-		<span class="title">(kg/ha)</span>
-		<span class="number">150</span>
-	</button>
-	
-	<button class="btn2">
-		<span class="title">pressão de</span>
-		<span class="title">corte</span>
-		<span class="number">70%</span>
-	</button>
+	<button class="btn" >Fertilizante (kg/ha) <span id="fertilizante" class="number">150</span></button>
+    
+    <button class="btn2" >Pressão de Corte <span id="pressao" class="number">70%</span></button>
 
 	<button class="btn3"> 
 		<span class="title">velocidade</span>
@@ -34,6 +26,41 @@
 	</button>
 
 </div>
+
+<script>
+    var valorFertilizante = 150;
+    var valorPressao = 70;
+
+    function incrementarFertilizante() {
+        valorFertilizante += 5;
+        document.getElementById("fertilizante").innerText = valorFertilizante;
+    }
+
+    function incrementarPressao() {
+        valorPressao += 1;
+        document.getElementById("pressao").innerText = valorPressao + '%';
+    }
+
+
+
+    // Obtenha o botão de fertilizante pelo ID
+var btn = document.getElementById("btn");
+
+// Adicione um evento de clique ao botão de fertilizante
+btn.addEventListener("click", function() {
+    // Lógica que deseja executar quando o botão é clicado
+    incrementarFertilizante();
+});
+
+var btn2 = document.getElementById("btn2");
+
+// Adicione um evento de clique ao botão de fertilizante
+btn2.addEventListener("click", function() {
+    // Lógica que deseja executar quando o botão é clicado
+    incrementarPressao();
+});
+
+</script>
 
 </body>
 </html>
